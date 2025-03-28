@@ -9,7 +9,6 @@ import (
 	"os/signal"
 	"sync"
 	"sync/atomic"
-	"syscall"
 
 	"gitlab.com/vredens/go-logger/v2"
 )
@@ -92,7 +91,7 @@ func (manager *Manager) Start() error {
 
 	// listen for termination signals
 	termChan := make(chan os.Signal, 1)
-	signal.Notify(termChan, syscall.SIGINT, syscall.SIGTERM, syscall.SIGUSR1)
+	signal.Notify(termChan, signals...)
 
 	manager.mux.Lock()
 	manager.mlog.Infof("process manager: starting [nprocs:%d]", len(manager.processes))
